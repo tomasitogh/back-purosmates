@@ -1,3 +1,7 @@
+## No se trabaja directamente en main.
+
+## Todos los cambios se hacen en dev y desde ramas feature/....
+
 # 🧉 Puros Mates - Back-End (Aplicaciones Interactivas)
 
 Este proyecto corresponde a la materia **Aplicaciones Interactivas**.  
