@@ -23,10 +23,10 @@ public class User {
     @Column
     private String password;
     @Column
-    private Role mail;
+    private String mail;
 
     @OneToMany(mappedBy="user") // se refiere a la clase user entera no solo al id
-    private List<Order> orders;
+    private List<Order> orders; // un usuario puede tener muchas ordenes
 
     @ManyToMany
     @JoinTable(name="user_id", joinColumns= @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))

@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @SuppressWarnings("override") // To indicate that this method overrides a method in the interface
     public List<Category> getCategories() {
-        return categoryRepository.findAll();
+        return categoryRepository.findAll(); // Devuelve todas las categorias del repositorio
     }
     
     

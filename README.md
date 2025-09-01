@@ -105,6 +105,10 @@ Mantener tu rama actualizada: cada vez que empieces a trabajar, asegurate de tra
     git checkout feature/mi-feature
     git merge dev
 
+## Flujo de trabajo del proyecto
+1. Crear una BD en el Workbench de MySQL.
+2. Creamos el schema con nombre sugerido: 'ecom'.
+3. ejecutamos en una query: "use {nombre_schema};"
 
 👥 Equipo
     Nicolás Blanco
