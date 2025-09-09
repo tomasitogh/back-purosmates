@@ -6,6 +6,7 @@ import com.uade.tpo.demo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
 
+    @Transactional
     public Order createOrder(User user, List<OrderItemRequest> itemsRequest) {
         Order order = new Order();
         order.setUser(user);
@@ -33,6 +35,7 @@ public class OrderService {
             }
 
             product.setStock(product.getStock() - req.getQuantity());
+            productRepository.save(product);
 
             OrderItem item = new OrderItem();
             item.setProduct(product);
