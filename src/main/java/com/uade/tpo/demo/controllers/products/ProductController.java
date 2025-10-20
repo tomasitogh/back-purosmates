@@ -25,14 +25,39 @@ public class ProductController {
                 product.getDescription(),
                 product.getPrice(),
                 product.getStock(),
-                product.getCategory().getId()
+                product.getCategory().getId(),
+                product.getImageUrls()
         );
-        return ResponseEntity.ok(saved); // ✅ devuelve el producto guardado
+        return ResponseEntity.ok(saved);
     }
 
     // Todos pueden ver los productos
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
+    }
+
+    // Solo ADMIN puede actualizar productos
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        Product updated = productService.updateProduct(
+                id,
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStock(),
+                product.getCategory().getId(),
+                product.getImageUrls()
+        );
+        return ResponseEntity.ok(updated);
+    }
+
+    // Solo ADMIN puede eliminar productos
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok().build();
     }
 }
