@@ -40,12 +40,15 @@ public class SecurityConfig {
                 .requestMatchers("/error/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/files/uploads/**").permitAll() // Permitir acceso a imágenes
+                .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll() // Permitir acceso a imágenes
                 
                 // Rutas de ADMIN
                 .requestMatchers(HttpMethod.POST, "/products/**").hasAuthority(Role.ADMIN.name())
                 .requestMatchers(HttpMethod.PUT, "/products/**").hasAuthority(Role.ADMIN.name())
                 .requestMatchers(HttpMethod.DELETE, "/products/**").hasAuthority(Role.ADMIN.name())
                 .requestMatchers("/categories/**").hasAuthority(Role.ADMIN.name())
+                .requestMatchers("/files/**").hasAuthority(Role.ADMIN.name()) // Upload de archivos solo admin
                 
                 // Rutas de USER y ADMIN
                 .requestMatchers(HttpMethod.POST, "/orders/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
