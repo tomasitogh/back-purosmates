@@ -40,12 +40,15 @@ public class SecurityConfig {
                 .requestMatchers("/error/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/files/uploads/**").permitAll() // Permitir acceso público a imágenes
+                .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll() // Permitir acceso público a imágenes
                 
                 // Rutas de ADMIN
                 .requestMatchers(HttpMethod.POST, "/products/**").hasAuthority(Role.ADMIN.name())
                 .requestMatchers(HttpMethod.PUT, "/products/**").hasAuthority(Role.ADMIN.name())
                 .requestMatchers(HttpMethod.DELETE, "/products/**").hasAuthority(Role.ADMIN.name())
                 .requestMatchers("/categories/**").hasAuthority(Role.ADMIN.name())
+                .requestMatchers(HttpMethod.POST, "/files/**").hasAuthority(Role.ADMIN.name()) // Upload solo admin
                 
                 // Rutas de USER y ADMIN
                 .requestMatchers(HttpMethod.POST, "/orders/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
@@ -64,11 +67,17 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5174"));
+        
+        // Permite ambos puertos para desarrollo
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "http://localhost:5174"
+        ));
+        
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L); // Cache preflight por 1 hora
+        configuration.setMaxAge(3600L);
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
