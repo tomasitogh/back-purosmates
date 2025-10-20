@@ -27,8 +27,11 @@ public class Product {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @ElementCollection
-    @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
-    @Column(name = "image_url", length = 500)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+        name = "product_images", 
+        joinColumns = @JoinColumn(name = "product_id")
+    )
+    @Column(name = "image_url", length = 500, unique = false)
     private List<String> imageUrls;
 }
